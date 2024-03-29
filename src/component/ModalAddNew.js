@@ -25,7 +25,7 @@ const ModalAddNew = (props) => {
 
   return (
     <>
-      <Modal show={show} onHide={handleClose}>
+      <Modal show={show} onHide={handleClose} backdrop="static" keyboard={false}>
         <Modal.Header closeButton>
           <Modal.Title>Add new user</Modal.Title>
         </Modal.Header>
@@ -33,7 +33,12 @@ const ModalAddNew = (props) => {
           <div className="body-add-new">
             <div class="mb-3">
               <label class="form-label">Name</label>
-              <input type="text" className="form-control" value={name} onChange={(event) => setName(event.target.value)} />
+              <input
+                type="text"
+                className="form-control"
+                value={name}
+                onChange={(event) => setName(event.target.value)}
+              />
             </div>
             <div class="mb-3">
               <label className="form-label">Job</label>

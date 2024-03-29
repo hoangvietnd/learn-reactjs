@@ -5,6 +5,7 @@ import ReactPaginate from 'react-paginate';
 import ModalAddNew from './ModalAddNew';
 import ModalEditUser from './ModalEditUser';
 import _ from 'lodash';
+import ModalConfirm from './ModalConfirm';
 
 const TableUsers = (props) => {
   const [listUser, setListUser] = useState([]);
@@ -12,12 +13,17 @@ const TableUsers = (props) => {
   const [totalPages, setTotalPages] = useState(0);
 
   const [isShowModalAddNew, setIsShowModalAddNew] = useState(false);
+
   const [isShowModalEdit, setIsShowModalEdit] = useState(false);
   const [dataUserEdit, setDataUserEdit] = useState({});
+
+  const [isShowModalDelete, setIsShowModalDelete] = useState(false);
+  const [dataUserDelete, setDataUserDelete] = useState({});
 
   const handleClose = () => {
     setIsShowModalAddNew(false);
     setIsShowModalEdit(false);
+    setIsShowModalDelete(false);
   };
 
   const handleUpdateTable = (user) => {
@@ -54,6 +60,11 @@ const TableUsers = (props) => {
     setListUser(cloneListUser);
   };
 
+  const handleDeleteUser = (user) => {
+    setIsShowModalDelete(true);
+    setDataUserDelete(user);
+  };
+
   return (
     <>
       <div className="my-3 add-new">
@@ -88,7 +99,9 @@ const TableUsers = (props) => {
                     <button className="btn btn-warning mx-3" onClick={() => handleEditUser(item)}>
                       Edit
                     </button>
-                    <button className="btn btn-danger">Delete</button>
+                    <button className="btn btn-danger" onClick={() => handleDeleteUser(item)}>
+                      Delete
+                    </button>
                   </td>
                 </tr>
               );
@@ -122,6 +135,8 @@ const TableUsers = (props) => {
         handleClose={handleClose}
         handleEditUserFromModal={handleEditUserFromModal}
       />
+
+      <ModalConfirm show={isShowModalDelete} handleClose={handleClose} dataUserDelete={dataUserDelete} />
     </>
   );
 };

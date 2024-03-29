@@ -4,7 +4,7 @@ import { fetchAllUser } from '../services/UserService';
 import ReactPaginate from 'react-paginate';
 import ModalAddNew from './ModalAddNew';
 import ModalEditUser from './ModalEditUser';
-import _ from 'lodash';
+import _, { debounce } from 'lodash';
 import ModalConfirm from './ModalConfirm';
 import './TableUser.scss';
 
@@ -23,6 +23,8 @@ const TableUsers = (props) => {
 
   const [sortBy, setSortBy] = useState('asc');
   const [sortField, setSortField] = useState('id');
+
+  const [keyword, setkeyword] = useState('');
 
   const handleClose = () => {
     setIsShowModalAddNew(false);
@@ -84,6 +86,17 @@ const TableUsers = (props) => {
     setListUser(cloneListUser);
   };
 
+  const handleSearch = debounce((event) => {
+    let term = event.target.value;
+    if (term) {
+      let cloneListUser = _.cloneDeep(listUser);
+      cloneListUser = cloneListUser.filter((item) => item.email.includes(term));
+      setListUser(cloneListUser);
+    } else {
+      getUsers(1);
+    }
+  }, 500);
+
   return (
     <>
       <div className="my-3 add-new">
@@ -93,6 +106,14 @@ const TableUsers = (props) => {
         <button className="btn btn-success" onClick={() => setIsShowModalAddNew(true)}>
           Add new user
         </button>
+      </div>
+      <div className="col-4 my-3">
+        <input
+          className="form-control"
+          placeholder="Search user by email"
+          // value={keyword}
+          onChange={(event) => handleSearch(event)}
+        />
       </div>
       <Table striped bordered hover>
         <thead>

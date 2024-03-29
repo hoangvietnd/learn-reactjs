@@ -1,20 +1,31 @@
 import { useEffect, useState } from 'react';
 import { Button, Modal } from 'react-bootstrap';
+import { updateUser } from '../services/UserService';
+import { toast } from 'react-toastify';
 
 const ModalEditUser = (props) => {
-  const { show, handleClose, dataUserEdit } = props;
+  const { show, handleClose, dataUserEdit, handleEditUserFromModal } = props;
   const [name, setName] = useState('');
   const [job, setJob] = useState('');
 
-  const handleEditUser = () => {
-
-  }
+  const handleEditUser = async () => {
+    let res = await updateUser(dataUserEdit.id, name, job);
+    if (res && res.updatedAt) {
+      // success
+      handleEditUserFromModal({
+        first_name: name,
+        id: dataUserEdit.id,
+      });
+      handleClose();
+      toast.success('Update user success!');
+    }
+  };
 
   useEffect(() => {
     if (show) {
-        setName(dataUserEdit.first_name)
+      setName(dataUserEdit.first_name);
     }
-  }, [dataUserEdit])
+  }, [dataUserEdit]);
 
   return (
     <>
@@ -24,13 +35,23 @@ const ModalEditUser = (props) => {
         </Modal.Header>
         <Modal.Body>
           <div className="body-add-new">
-            <div class="mb-3">
-              <label class="form-label">Name</label>
-              <input type="text" className="form-control" value={name} onChange={(event) => setName(event.target.value)} />
+            <div className="mb-3">
+              <label className="form-label">Name</label>
+              <input
+                type="text"
+                className="form-control"
+                value={name}
+                onChange={(event) => setName(event.target.value)}
+              />
             </div>
-            <div class="mb-3">
+            <div className="mb-3">
               <label className="form-label">Job</label>
-              <input type="text" class="form-control" value={job} onChange={(event) => setJob(event.target.value)} />
+              <input
+                type="text"
+                className="form-control"
+                value={job}
+                onChange={(event) => setJob(event.target.value)}
+              />
             </div>
           </div>
         </Modal.Body>

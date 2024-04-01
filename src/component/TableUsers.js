@@ -1,11 +1,12 @@
+import _, { debounce } from 'lodash';
 import { useEffect, useState } from 'react';
 import Table from 'react-bootstrap/Table';
-import { fetchAllUser } from '../services/UserService';
+import { CSVLink } from 'react-csv';
 import ReactPaginate from 'react-paginate';
+import { fetchAllUser } from '../services/UserService';
 import ModalAddNew from './ModalAddNew';
-import ModalEditUser from './ModalEditUser';
-import _, { debounce } from 'lodash';
 import ModalConfirm from './ModalConfirm';
+import ModalEditUser from './ModalEditUser';
 import './TableUser.scss';
 
 const TableUsers = (props) => {
@@ -97,15 +98,33 @@ const TableUsers = (props) => {
     }
   }, 500);
 
+  const csvData = [
+    ['firstname', 'lastname', 'email'],
+    ['Ahmed', 'Tomi', 'ah@smthing.co.com'],
+    ['Raed', 'Labes', 'rl@smthing.co.com'],
+    ['Yezzi', 'Min l3b', 'ymin@cocococo.com'],
+  ];
+
   return (
     <>
       <div className="my-3 add-new">
         <span>
           <b>List User:</b>
         </span>
-        <button className="btn btn-success" onClick={() => setIsShowModalAddNew(true)}>
-          Add new user
-        </button>
+        <div className="group-btns">
+          <label htmlFor="import-btn" className="btn btn-warning">
+            <i class="fa-solid fa-file-import"></i>Import
+          </label>
+          <input id="import-btn" type="file" hidden />
+
+          <CSVLink filename={'users.csv'} className="btn btn-primary" data={csvData} style={{}}>
+            <i className="fa-solid fa-file-arrow-down"></i>Export
+          </CSVLink>
+
+          <button className="btn btn-success" onClick={() => setIsShowModalAddNew(true)}>
+            <i className="fa-solid fa-circle-plus"></i>Add new
+          </button>
+        </div>
       </div>
       <div className="col-4 my-3">
         <input
@@ -169,10 +188,10 @@ const TableUsers = (props) => {
                   <td>{item.last_name}</td>
                   <td>
                     <button className="btn btn-warning mx-3" onClick={() => handleEditUser(item)}>
-                      Edit
+                      <i className="fa-solid fa-user-pen"></i>Edit
                     </button>
                     <button className="btn btn-danger" onClick={() => handleDeleteUser(item)}>
-                      Delete
+                      <i className="fa-solid fa-trash"></i>Delete
                     </button>
                   </td>
                 </tr>

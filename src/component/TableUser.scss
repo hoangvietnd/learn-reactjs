@@ -7,3 +7,18 @@
     padding: 0 2px;
   }
 }
+
+.fa-solid {
+  margin-right: 0.5rem;
+}
+
+.add-new {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  .group-btns{
+    display: flex;
+    gap: 10px;
+  }
+}

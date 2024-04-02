@@ -2,12 +2,10 @@ import Container from 'react-bootstrap/Container';
 import Nav from 'react-bootstrap/Nav';
 import NavDropdown from 'react-bootstrap/NavDropdown';
 import Navbar from 'react-bootstrap/Navbar';
-import { useLocation, NavLink } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
 import logoApp from '../assets/images/logo192.png';
 
 const Header = (props) => {
-  let location = useLocation();
-
   return (
     <>
       <Navbar expand="lg" className="bg-body-tertiary">

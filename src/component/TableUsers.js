@@ -27,8 +27,6 @@ const TableUsers = (props) => {
   const [sortBy, setSortBy] = useState('asc');
   const [sortField, setSortField] = useState('id');
 
-  const [keyword, setkeyword] = useState('');
-
   const [dataExport, setDataExport] = useState([]);
 
   const handleClose = () => {

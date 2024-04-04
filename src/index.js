@@ -8,12 +8,15 @@ import 'react-toastify/dist/ReactToastify.css';
 import App from './App';
 import store from './redux/store';
 import reportWebVitals from './reportWebVitals';
+import ErrorBoundary from './components/error-boundaries/ErrorBoundary';
 
 ReactDOM.render(
   <Provider store={store}>
     <React.StrictMode>
       <BrowserRouter>
-        <App />
+        <ErrorBoundary>
+          <App />
+        </ErrorBoundary>
       </BrowserRouter>
     </React.StrictMode>
   </Provider>,

@@ -5,7 +5,7 @@ import { useSelector } from 'react-redux';
 function PrivateRoutes(props) {
   const user = useSelector(state => state.user.account);
 
-  if (user && !user.auth) {
+  if (user && user.auth === false) {
     return (
       <>
         <Alert variant="danger" className="mt-3">
